@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mission Control</title>
+<meta name="description" content="Live view of running work, requests and follow-ups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14; --bg2:#0f141d; --card:#131a26; --card2:#17202f;
+  --line:rgba(148,163,184,.12); --txt:#e6edf6; --muted:#8b98ac; --muted2:#5d6b82;
+  --green:#34d399; --blue:#60a5fa; --amber:#fbbf24; --violet:#a78bfa; --red:#f87171;
+  --grad:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#d946ef 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,system-ui,sans-serif;line-height:1.5;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(600px 300px at 20% -5%,rgba(99,102,241,.18),transparent 60%),radial-gradient(500px 260px at 90% 0%,rgba(217,70,239,.10),transparent 60%);pointer-events:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 64px;position:relative}
+
+header{padding:28px 0 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 18px rgba(139,92,246,.4)}
+h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:13px;margin-top:10px}
+.stamp{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.stamp .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:center}
+.stat .num{font-size:26px;font-weight:800;letter-spacing:-.03em}
+.stat .lbl{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.stat.s1 .num{color:var(--green)}.stat.s2 .num{color:var(--violet)}.stat.s3 .num{color:var(--amber)}
+
+section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-head h2{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.sec-head .count{font-size:11px;font-weight:700;color:var(--muted);background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.sec-head .bar{flex:1;height:1px;background:var(--line)}
+.ico{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.ico.g{background:rgba(52,211,153,.12);color:var(--green)}
+.ico.v{background:rgba(167,139,250,.12);color:var(--violet)}
+.ico.a{background:rgba(251,191,36,.12);color:var(--amber)}
+
+.grid{display:grid;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;transition:transform .15s ease,border-color .15s ease}
+.card:active{transform:scale(.985)}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px}
+.pill::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.on{color:var(--green);background:rgba(52,211,153,.12)}
+.pill.off{color:var(--muted);background:rgba(139,152,172,.12)}
+.pill.prog{color:var(--blue);background:rgba(96,165,250,.12)}
+.pill.wait{color:var(--amber);background:rgba(251,191,36,.12)}
+.age{font-size:11.5px;color:var(--muted2);font-weight:500;text-align:right}
+.card-title{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.card-note{font-size:13px;color:var(--muted);margin-top:5px}
+.badge.unclear{font-size:10px;font-weight:600;color:var(--red);background:rgba(248,113,113,.12);border-radius:6px;padding:2px 7px;vertical-align:middle}
+.empty{color:var(--muted2);font-size:13px;background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:18px;text-align:center}
+
+footer{margin-top:36px;text-align:center;color:var(--muted2);font-size:12px}
+footer .heart{color:var(--violet)}
+
+@media(min-width:640px){
+  .grid{grid-template-columns:1fr 1fr}
+  .grid.single{grid-template-columns:1fr}
+  header{padding-top:40px}
+  h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><div class="logo">&#9672;</div><h1>Mission Control</h1></div>
+  <div class="sub">A live view of what your Instinct is running, what you asked for, and what it picked up on its own.</div>
+  <span class="stamp"><span class="dot"></span>Updated Nov 21, 5:04 AM IST &middot; refreshes hourly</span>
+</header>
+
+<div class="stats">
+  <div class="stat s1"><div class="num">10</div><div class="lbl">Running</div></div>
+  <div class="stat s2"><div class="num">8</div><div class="lbl">Your requests</div></div>
+  <div class="stat s3"><div class="num">4</div><div class="lbl">Self-assigned</div></div>
+</div>
+
+<section>
+  <div class="sec-head"><span class="ico g">&#9654;</span><h2>Running now</h2><span class="count">10</span><span class="bar"></span></div>
+  <div class="grid">
+<div class="card">
+  <div class="card-top"><span class="pill off">Paused</span><span class="age">Paused</span></div>
+  <div class="card-title">Balloon Pop rewarded ads</div>
+  <div class="card-note">Adding rewarded ads to the Balloon Pop game</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: tomorrow 1:30 AM</span></div>
+  <div class="card-title">Los Santos Tales channel</div>
+  <div class="card-note">New English Shorts channel</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 10:00 AM</span></div>
+  <div class="card-title">Midnight Tales manager</div>
+  <div class="card-note">One Hindi story Reel every day at 8:00 PM</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 9:49 AM</span></div>
+  <div class="card-title">Open-source contributions</div>
+  <div class="card-note">Preparing contributions, watching maintainer replies</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: tomorrow 6:00 PM</span></div>
+  <div class="card-title">Check Karo AI manager</div>
+  <div class="card-note">Channel strategy, uploads and weekly growth reports</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 4:15 PM</span></div>
+  <div class="card-title">Adobe Stock image pipeline</div>
+  <div class="card-note">Daily batch of free images prepared as drafts</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: Nov 23 2:20 PM</span></div>
+  <div class="card-title">Adobe review watcher</div>
+  <div class="card-note">Weekly check on submitted image batches</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill off">Paused</span><span class="age">Paused</span></div>
+  <div class="card-title">Shayari Shorts studio</div>
+  <div class="card-note">First shayari Shorts sample; awaiting your direction</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill off">Paused</span><span class="age">Paused</span></div>
+  <div class="card-title">Daily songs studio</div>
+  <div class="card-note">Four songs a day, published only after your approval</div>
+</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="ico v">&#9733;</span><h2>Tasks you gave me</h2><span class="count">8</span><span class="bar"></span></div>
+  <div class="grid single">
+<div class="card">
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">36 hours</span></div>
+  <div class="card-title">Daily Firefly images as Adobe Stock drafts</div>
+  <div class="card-note">New images prepared daily; submitted only after your approval.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">5 days</span></div>
+  <div class="card-title">Grow Check Karo AI toward monetization</div>
+  <div class="card-note">Channel running on plan; analytics reviewed on schedule.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">4 days</span></div>
+  <div class="card-title">Open source: just-range issue</div>
+  <div class="card-note">Waiting on the maintainer&#x27;s reply.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">4 days</span></div>
+  <div class="card-title">Open source: LibreChat contribution</div>
+  <div class="card-note">Waiting on maintainer approval before work starts.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">19 hours</span></div>
+  <div class="card-title">Grow Midnight Tales on Instagram</div>
+  <div class="card-note">Daily Reel at 8 PM on YouTube; Instagram paused for now.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">43 hours</span></div>
+  <div class="card-title">Launch Los Santos Tales Shorts channel</div>
+  <div class="card-note">Channel live; Shorts publishing on schedule.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">36 hours</span></div>
+  <div class="card-title">This dashboard, live on GitHub Pages</div>
+  <div class="card-note">You&#x27;re looking at it. Refreshes itself when things change.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">16 hours</span></div>
+  <div class="card-title">Balloon Pop rewarded ads</div>
+  <div class="card-note">Integrating rewarded ads into the Balloon Pop game.</div>
+</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="ico a">&#9881;</span><h2>I assigned myself</h2><span class="count">4</span><span class="bar"></span></div>
+  <div class="grid single">
+<div class="card">
+  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">3 days</span></div>
+  <div class="card-title">Adobe Stock review: Nov 17 batch</div>
+  <div class="card-note">Review underway; some images not accepted.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">2 days</span></div>
+  <div class="card-title">Adobe Stock review: Nov 18 batch</div>
+  <div class="card-note">Submitted; in Adobe&#x27;s review queue.</div>
+</div>
+<div class="card">
+  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">36 hours</span></div>
+  <div class="card-title">Adobe Stock review: Nov 19 batch</div>
+  <div class="card-note">Submitted; in Adobe&#x27;s review queue.</div>
+</div>
+<div class="empty">plus 2 more open items tracked quietly</div>
+  </div>
+</section>
+
+<footer>Generated automatically from live task data <span class="heart">&middot;</span> updates every hour</footer>
+</div>
+</body>
+</html>
