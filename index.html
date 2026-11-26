@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mission Control</title>
+<title>NOVA Dashboard</title>
 <meta name="description" content="Live view of running work, requests and follow-ups.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +45,12 @@ section{margin-top:26px}
 .ico.v{background:rgba(167,139,250,.12);color:var(--violet)}
 .ico.a{background:rgba(251,191,36,.12);color:var(--amber)}
 .ico.r{background:rgba(251,113,133,.14);color:#fb7185}
+.ico.b{background:rgba(96,165,250,.12);color:var(--blue)}
+.tlist{display:flex;flex-direction:column;gap:8px}
+.trow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:14px}
+.trow .box{width:15px;height:15px;border-radius:5px;border:2px solid var(--muted2);flex-shrink:0}
+.trow .nm{flex:1;font-weight:500}
+.trow .st{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 
 .grid{display:grid;gap:10px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;transition:transform .15s ease,border-color .15s ease}
@@ -76,9 +82,9 @@ footer .heart{color:var(--violet)}
 <body>
 <div class="wrap">
 <header>
-  <div class="brand"><div class="logo">&#9672;</div><h1>Mission Control</h1></div>
+  <div class="brand"><div class="logo">&#9672;</div><h1>NOVA Dashboard</h1></div>
   <div class="sub">A live view of what your Instinct is running, what you asked for, and what it picked up on its own.</div>
-  <span class="stamp"><span class="dot"></span>Updated Nov 26, 12:04 PM IST &middot; refreshes hourly</span>
+  <span class="stamp"><span class="dot"></span>Updated Nov 26, 4:40 PM IST &middot; refreshes hourly</span>
 </header>
 
 <div class="stats">
@@ -104,12 +110,12 @@ footer .heart{color:var(--violet)}
   <div class="card-note">Overnight build; live demo due by 11 AM</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 3:00 PM</span></div>
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 7:45 PM</span></div>
   <div class="card-title">Los Santos Tales channel</div>
   <div class="card-note">New English Shorts channel</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 1:45 PM</span></div>
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 7:10 PM</span></div>
   <div class="card-title">Midnight Tales manager</div>
   <div class="card-note">One Hindi story Reel every day at 8:00 PM</div>
 </div>
@@ -124,7 +130,7 @@ footer .heart{color:var(--violet)}
   <div class="card-note">Channel strategy, uploads and weekly growth reports</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: today 1:30 PM</span></div>
+  <div class="card-top"><span class="pill on">Active</span><span class="age">Next: tomorrow 1:30 PM</span></div>
   <div class="card-title">Adobe Stock image pipeline</div>
   <div class="card-note">Daily batch of free images prepared as drafts</div>
 </div>
@@ -150,17 +156,17 @@ footer .heart{color:var(--violet)}
   <div class="sec-head"><span class="ico v">&#9733;</span><h2>Tasks you gave me</h2><span class="count">7</span><span class="bar"></span></div>
   <div class="grid single">
 <div class="card">
-  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">19 hours</span></div>
+  <div class="card-top"><span class="pill wait">Waiting</span><span class="age">23 hours</span></div>
   <div class="card-title">Daily Firefly images as Adobe Stock drafts</div>
   <div class="card-note">Latest batch approved and submitted.</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill prog">In progress</span><span class="age">4 minutes</span></div>
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">4 hours</span></div>
   <div class="card-title">Grow Check Karo AI toward monetization</div>
   <div class="card-note">Channel running on plan; analytics reviewed on schedule.</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill prog">In progress</span><span class="age">21 hours</span></div>
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">25 hours</span></div>
   <div class="card-title">Grow Midnight Tales on Instagram</div>
   <div class="card-note">Daily Reel at 8 PM on YouTube; Instagram paused for now.</div>
 </div>
@@ -170,7 +176,7 @@ footer .heart{color:var(--violet)}
   <div class="card-note">Channel live; Shorts publishing on schedule.</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill prog">In progress</span><span class="age">6 days</span></div>
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">7 days</span></div>
   <div class="card-title">This dashboard, live on GitHub Pages</div>
   <div class="card-note">You&#x27;re looking at it. Refreshes itself when things change.</div>
 </div>
@@ -180,7 +186,7 @@ footer .heart{color:var(--violet)}
   <div class="card-note">Parked; resumes when you say so.</div>
 </div>
 <div class="card">
-  <div class="card-top"><span class="pill prog">In progress</span><span class="age">28 hours</span></div>
+  <div class="card-top"><span class="pill prog">In progress</span><span class="age">32 hours</span></div>
   <div class="card-title">Hospital client website</div>
   <div class="card-note">Demo live; client handover in progress.</div>
 </div>
@@ -201,6 +207,21 @@ footer .heart{color:var(--violet)}
   <div class="card-note">Parked for now; will build later.</div>
 </div>
 <div class="empty">plus 1 more open item tracked quietly</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="ico b">&#9745;</span><h2>Todo list</h2><span class="count">9</span><span class="bar"></span></div>
+  <div class="tlist">
+<div class="trow"><span class="box"></span><span class="nm">Daily Firefly images as Adobe Stock drafts</span><span class="st">Waiting</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Grow Check Karo AI toward monetization</span><span class="st">In progress</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Grow Midnight Tales on Instagram</span><span class="st">In progress</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Launch Los Santos Tales Shorts channel</span><span class="st">In progress</span></div>
+<div class="trow"><span class="box"></span><span class="nm">This dashboard, live on GitHub Pages</span><span class="st">In progress</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Upwork + Contra freelance profiles</span><span class="st">In progress</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Hospital client website</span><span class="st">In progress</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Adobe Stock review: Nov 21-23 batches</span><span class="st">Waiting</span></div>
+<div class="trow"><span class="box"></span><span class="nm">Curiosity-explainer channel</span><span class="st">In progress</span></div>
   </div>
 </section>
 
